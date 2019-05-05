@@ -1,4 +1,4 @@
-# events
+# Events
 
 Events Flutter Application
 
