@@ -4,10 +4,14 @@ class Margins {
 }
 
 class AppRadius {
-  static double cardRadius = 12;
+  static double cardRadius = 8;
 }
 
 class TextSizes {
   static double title = 20;
   static double body = 15;
+}
+
+class AppSizes {
+  static double avatarRadius = 16;
 }

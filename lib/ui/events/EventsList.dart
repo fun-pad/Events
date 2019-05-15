@@ -4,6 +4,7 @@ import 'package:events/models/Event.dart';
 import 'package:events/resources/AppColors.dart';
 import 'package:events/resources/Dimens.dart';
 import 'package:events/resources/Strings.dart';
+import 'package:events/ui/eventdetails/EventDetailsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
@@ -17,8 +18,12 @@ class EventsListWidget extends StreamWidget<List<Event>> {
       padding: EdgeInsets.only(bottom: Margins.vertical),
       itemCount: snapshot.data.length,
       itemBuilder: (BuildContext context, int index) {
+        Event event = snapshot.data[index];
         return EventsListItem(
-          event: snapshot.data[index],
+          event: event,
+          itemSelected: () {
+            _showDetails(context, event);
+          },
         );
       },
     );
@@ -28,6 +33,12 @@ class EventsListWidget extends StreamWidget<List<Event>> {
   Observable<List<Event>> stream() {
     eventsBloc.fetchAllEvents();
     return eventsBloc.allEvents;
+  }
+
+  void _showDetails(BuildContext context, Event event) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return EventDetailsScreen(event.id);
+    }));
   }
 }
 

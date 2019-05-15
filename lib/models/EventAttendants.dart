@@ -1,10 +1,10 @@
-class EventAttendants {
+class EventAttendantsOverview {
   int _invited;
   int _going;
   int _maybe;
   int _rejected;
 
-  EventAttendants(int invited, int going, int maybe, int rejected) {
+  EventAttendantsOverview(int invited, int going, int maybe, int rejected) {
     _invited = invited;
     _going = going;
     _maybe = maybe;

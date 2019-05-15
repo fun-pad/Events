@@ -1,14 +1,16 @@
 import 'package:events/models/Event.dart';
 import 'package:events/models/EventState.dart';
 import 'package:events/resources/AppColors.dart';
+import 'package:events/resources/AppTextStyles.dart';
 import 'package:events/resources/Dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class EventsListItem extends StatelessWidget {
   final Event event;
+  final GestureTapCallback itemSelected;
 
-  EventsListItem({this.event});
+  EventsListItem({this.event, this.itemSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -22,96 +24,92 @@ class EventsListItem extends StatelessWidget {
         top: Margins.vertical,
       ),
       color: AppColors.bgPrimary,
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(AppRadius.cardRadius),
-                topRight: Radius.circular(AppRadius.cardRadius),
+      child: InkWell(
+        onTap: itemSelected,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppRadius.cardRadius),
+                  topRight: Radius.circular(AppRadius.cardRadius),
+                ),
+                child: Image.asset(
+                  event.image.path,
+                  fit: BoxFit.fill,
+                  height: 120,
+                ),
               ),
-              child: Image.asset(
-                event.image.path,
-                fit: BoxFit.fill,
-                height: 120,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: Margins.horizontal,
-                right: Margins.horizontal,
-                top: Margins.vertical,
-                bottom: Margins.vertical,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            event.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: TextSizes.title,
+              Container(
+                margin: EdgeInsets.only(
+                  left: Margins.horizontal,
+                  right: Margins.horizontal,
+                  top: Margins.vertical,
+                  bottom: Margins.vertical,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              event.name,
+                              style: AppTextStyles.title,
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 2),
-                            child: Text(
-                              event.when(),
-                              style: TextStyle(
-                                fontSize: TextSizes.body,
+                            Container(
+                              margin: EdgeInsets.only(top: 2),
+                              child: Text(
+                                event.when(),
+                                style: AppTextStyles.body,
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          _getIconForEvent(event),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.people_outline,
-                                color: AppColors.textPrimary,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 4,
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            _getIconForEvent(event),
+                            Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.people_outline,
+                                  color: AppColors.textPrimary,
                                 ),
-                                child: Text("${event.attendants.going} people"),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: Margins.vertical,
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: 4,
+                                  ),
+                                  child:
+                                      Text("${event.attendants.going} people"),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    child: Text(
-                      event.description,
-                      style: TextStyle(
-                        fontSize: TextSizes.body,
-                        color: AppColors.textLight,
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: Margins.vertical,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      child: Text(
+                        event.description,
+                        style: AppTextStyles.bodyLight,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

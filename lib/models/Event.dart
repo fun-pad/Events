@@ -10,11 +10,13 @@ class Event {
   DateTime _endDate;
   EventState _state;
   String _description;
-  EventAttendants _attendants;
+  EventAttendantsOverview _attendants;
   EventImage _image;
+  int _id;
 
-  Event(String name, DateTime startDate, DateTime endDate, EventState state,
-      String description, EventAttendants attendants, EventImage image) {
+  Event(int id, String name, DateTime startDate, DateTime endDate, EventState state,
+      String description, EventAttendantsOverview attendants, EventImage image) {
+    _id = id;
     _name = name;
     _startDate = startDate;
     _endDate = endDate;
@@ -23,6 +25,8 @@ class Event {
     _attendants = attendants;
     _image = image;
   }
+
+  int get id => _id;
 
   String get name => _name;
 
@@ -34,7 +38,7 @@ class Event {
 
   String get description => _description;
 
-  EventAttendants get attendants => _attendants;
+  EventAttendantsOverview get attendants => _attendants;
 
   EventImage get image => _image;
 
