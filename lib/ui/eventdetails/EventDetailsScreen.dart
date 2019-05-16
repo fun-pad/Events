@@ -4,6 +4,7 @@ import 'package:events/models/EventDetails.dart';
 import 'package:events/resources/AppColors.dart';
 import 'package:events/resources/AppTextStyles.dart';
 import 'package:events/resources/Dimens.dart';
+import 'package:events/ui/poll/create/CreatePoll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
@@ -23,6 +24,7 @@ class EventDetailsScreen extends StreamWidget<EventDetails> {
 
     return Scaffold(
       backgroundColor: AppColors.bgSecondary,
+      floatingActionButton: _CreateNewPoll(details.id),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -50,11 +52,9 @@ class EventDetailsScreen extends StreamWidget<EventDetails> {
             EventDetailsTitle("Description"),
             Container(
               alignment: Alignment(-1, 0),
-              margin: EdgeInsets.only(
-                left: Margins.horizontal,
-                right: Margins.horizontal,
-                top: Margins.vertical,
-                bottom: Margins.vertical,
+              margin: EdgeInsets.symmetric(
+                horizontal: AppMargins.horizontal,
+                vertical: AppMargins.vertical,
               ),
               child: Text(
                 details.description,
@@ -76,5 +76,24 @@ class EventDetailsScreen extends StreamWidget<EventDetails> {
     _eventDetailsBloc.fetchDetails();
 
     return _eventDetailsBloc.eventDetails;
+  }
+}
+
+class _CreateNewPoll extends StatelessWidget {
+  final int _eventId;
+
+  const _CreateNewPoll(this._eventId, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.poll),
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return CreatePoll(_eventId);
+        }));
+      },
+    );
   }
 }

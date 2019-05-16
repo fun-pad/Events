@@ -27,11 +27,9 @@ class EventGoingGrid extends StatelessWidget {
               shrinkWrap: true,
               crossAxisCount: 2,
               childAspectRatio: 4,
-              padding: EdgeInsets.only(
-                top: Margins.vertical,
-                bottom: Margins.vertical,
-                left: Margins.horizontal,
-                right: Margins.horizontal,
+              padding: EdgeInsets.symmetric(
+                vertical: AppMargins.vertical,
+                horizontal: AppMargins.horizontal,
               ),
               children: List.generate(gridCount, (index) {
                 Attendant attendant = _attendants[index];
@@ -47,7 +45,7 @@ class EventGoingGrid extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: Margins.horizontal),
+                      margin: EdgeInsets.only(left: AppMargins.horizontal),
                       child: Text(
                         attendant.name,
                         overflow: TextOverflow.ellipsis,

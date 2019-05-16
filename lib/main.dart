@@ -1,4 +1,5 @@
 import 'package:events/resources/AppColors.dart';
+import 'package:events/resources/AppTextStyles.dart';
 import 'package:events/ui/events/EventsList.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: textTheme,
         primaryColor: AppColors.bgPrimary,
+        accentColor: AppColors.accent,
+        backgroundColor: AppColors.bgPrimary,
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: AppTextStyles.bodyLight,
+          fillColor: AppColors.textPrimary,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.textPrimary),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.textPrimary),
+          ),
+        ),
       ),
       home: EventsList(),
     );

@@ -1,6 +1,7 @@
-class Margins {
+class AppMargins {
   static double horizontal = 16;
   static double vertical = 12;
+  static double verticalLarge = 24;
 }
 
 class AppRadius {
@@ -9,6 +10,7 @@ class AppRadius {
 
 class TextSizes {
   static double title = 20;
+  static double input = 20;
   static double body = 15;
 }
 

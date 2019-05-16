@@ -25,4 +25,10 @@ class AppTextStyles {
     fontSize: TextSizes.title,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle input = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: TextSizes.input,
+    fontWeight: FontWeight.normal,
+  );
 }

@@ -19,7 +19,7 @@ class EventCommentsSection extends StatelessWidget {
         notification.disallowGlow();
       },
       child: ListView.builder(
-        padding: EdgeInsets.only(top: Margins.vertical),
+        padding: EdgeInsets.only(top: AppMargins.vertical),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: _comments.length,
@@ -44,9 +44,9 @@ class _ReplyView extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(
-        top: Margins.vertical,
-        left: (Margins.horizontal + AppSizes.avatarRadius) * 2,
-        right: Margins.horizontal,
+        top: AppMargins.vertical,
+        left: (AppMargins.horizontal + AppSizes.avatarRadius) * 2,
+        right: AppMargins.horizontal,
       ),
       child: _ItemRow(attendant.imagePath, _reply.text),
     );
@@ -69,9 +69,9 @@ class _CommentView extends StatelessWidget {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(
-            top: Margins.vertical,
-            left: Margins.horizontal,
-            right: Margins.horizontal,
+            top: AppMargins.vertical,
+            left: AppMargins.horizontal,
+            right: AppMargins.horizontal,
           ),
           child: _ItemRow(attendant.imagePath, _comment.text),
         ),
@@ -115,7 +115,7 @@ class _ItemRow extends StatelessWidget {
         Flexible(
           child: Container(
             margin: EdgeInsets.only(
-              left: Margins.horizontal,
+              left: AppMargins.horizontal,
             ),
             child: Text(
               _text,
