@@ -5,6 +5,7 @@ import 'package:events/resources/AppColors.dart';
 import 'package:events/resources/Dimens.dart';
 import 'package:events/resources/Strings.dart';
 import 'package:events/ui/eventdetails/EventDetailsScreen.dart';
+import 'package:events/ui/poll/create/CreatePoll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
@@ -15,7 +16,7 @@ class EventsListWidget extends StreamWidget<List<Event>> {
   @override
   Widget showData(AsyncSnapshot snapshot) {
     return ListView.builder(
-      padding: EdgeInsets.only(bottom: Margins.vertical),
+      padding: EdgeInsets.only(bottom: AppMargins.vertical),
       itemCount: snapshot.data.length,
       itemBuilder: (BuildContext context, int index) {
         Event event = snapshot.data[index];
@@ -51,7 +52,7 @@ class EventsList extends StatelessWidget {
         title: Text(Strings.eventsTitle),
         leading: new IconButton(
           icon: new Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(null),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: EventsListWidget(),

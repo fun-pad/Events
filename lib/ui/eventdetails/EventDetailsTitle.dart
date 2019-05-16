@@ -12,8 +12,8 @@ class EventDetailsTitle extends StatelessWidget {
     return Container(
       alignment: Alignment(-1, 0),
       margin: EdgeInsets.only(
-        left: Margins.horizontal,
-        top: Margins.vertical,
+        left: AppMargins.horizontal,
+        top: AppMargins.vertical,
       ),
       child: Text(
         _title,

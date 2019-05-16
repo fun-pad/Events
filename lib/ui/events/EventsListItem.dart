@@ -19,9 +19,9 @@ class EventsListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.cardRadius),
       ),
       margin: EdgeInsets.only(
-        left: Margins.horizontal,
-        right: Margins.horizontal,
-        top: Margins.vertical,
+        left: AppMargins.horizontal,
+        right: AppMargins.horizontal,
+        top: AppMargins.vertical,
       ),
       color: AppColors.bgPrimary,
       child: InkWell(
@@ -42,11 +42,9 @@ class EventsListItem extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
-                  left: Margins.horizontal,
-                  right: Margins.horizontal,
-                  top: Margins.vertical,
-                  bottom: Margins.vertical,
+                margin: EdgeInsets.symmetric(
+                  vertical: AppMargins.vertical,
+                  horizontal: AppMargins.horizontal,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +94,7 @@ class EventsListItem extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                        top: Margins.vertical,
+                        top: AppMargins.vertical,
                       ),
                       child: Text(
                         event.description,

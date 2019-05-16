@@ -10,6 +10,4 @@ class Attendant {
   String get name => _name;
 
   String get imagePath => _imagePath;
-
-
 }
