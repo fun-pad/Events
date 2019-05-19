@@ -5,7 +5,7 @@ import 'package:events/resources/Dimens.dart';
 import 'package:flutter/material.dart';
 
 class CreatePoll extends StatefulWidget {
-  final int _eventId;
+  final String _eventId;
 
   const CreatePoll(this._eventId, {Key key}) : super(key: key);
 
