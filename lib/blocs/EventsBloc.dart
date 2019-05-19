@@ -1,5 +1,5 @@
 import 'package:events/models/Event.dart';
-import 'package:events/repositories/events/EventsRepository.dart';
+import 'package:events/repositories/real/EventsRepository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 

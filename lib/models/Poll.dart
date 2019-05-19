@@ -1,7 +1,7 @@
 class Poll {
   String question;
   List<PollOption> options;
-  int id;
+  String id;
 
   Poll({this.id, this.question, this.options});
 }

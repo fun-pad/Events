@@ -12,9 +12,9 @@ class Event {
   String _description;
   EventAttendantsOverview _attendants;
   EventImage _image;
-  int _id;
+  String _id;
 
-  Event(int id, String name, DateTime startDate, DateTime endDate, EventState state,
+  Event(String id, String name, DateTime startDate, DateTime endDate, EventState state,
       String description, EventAttendantsOverview attendants, EventImage image) {
     _id = id;
     _name = name;
@@ -26,7 +26,7 @@ class Event {
     _image = image;
   }
 
-  int get id => _id;
+  String get id => _id;
 
   String get name => _name;
 

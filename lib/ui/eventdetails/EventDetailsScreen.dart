@@ -1,99 +1,97 @@
 import 'package:events/base/StreamWidget.dart';
 import 'package:events/blocs/EventDetailsBloc.dart';
+import 'package:events/models/Attendant.dart';
+import 'package:events/models/Comment.dart';
 import 'package:events/models/EventDetails.dart';
-import 'package:events/resources/AppColors.dart';
-import 'package:events/resources/AppTextStyles.dart';
-import 'package:events/resources/Dimens.dart';
-import 'package:events/ui/poll/create/CreatePoll.dart';
+import 'package:events/models/Reply.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'EventCommentsSection.dart';
-import 'EventDetailsTitle.dart';
-import 'EventGoingGrid.dart';
+import 'EventDetailsLayout.dart';
 
-class EventDetailsScreen extends StreamWidget<EventDetails> {
+class EventDetailsScreen extends StreamWidget<Details> {
   final EventDetailsBloc _eventDetailsBloc;
 
   EventDetailsScreen(_eventId) : _eventDetailsBloc = EventDetailsBloc(_eventId);
 
-  @override
-  Widget showData(AsyncSnapshot<EventDetails> snapshot) {
-    EventDetails details = snapshot.data;
+  List<EventDetailsView> _listOfDetails(Details details) {
+    EventDetails eventDetails = details.eventDetails;
 
-    return Scaffold(
-      backgroundColor: AppColors.bgSecondary,
-      floatingActionButton: _CreateNewPoll(details.id),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              expandedHeight: 160,
-              floating: false,
-              pinned: true,
-              backgroundColor: AppColors.bgPrimary,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text(
-                  details.name,
-                  style: AppTextStyles.title,
-                ),
-                background: Image.asset(
-                  details.image.path,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ];
-        },
-        body: Column(
-          children: <Widget>[
-            EventDetailsTitle("Description"),
-            Container(
-              alignment: Alignment(-1, 0),
-              margin: EdgeInsets.symmetric(
-                horizontal: AppMargins.horizontal,
-                vertical: AppMargins.vertical,
-              ),
-              child: Text(
-                details.description,
-                style: AppTextStyles.body,
-              ),
-            ),
-            EventDetailsTitle("Who's Going?"),
-            EventGoingGrid(details.attendantsGoing),
-            EventDetailsTitle("Comments"),
-            EventCommentsSection(details.comments, details.attendantsGoing)
-          ],
-        ),
-      ),
-    );
+    List<EventDetailsView> detailViews = List();
+
+    detailViews.add(TitleView("Description"));
+    detailViews.add(DescriptionView(eventDetails.description));
+    detailViews.add(TitleView("Who's Going?"));
+    detailViews.add(AttendeesGrid(eventDetails.attendantsGoing));
+    detailViews.add(TitleView("Comments"));
+    eventDetails.comments.forEach((comment) {
+      detailViews.add(CommentView(
+          comment, eventDetails.attendantsGoing, details.loggedInUser));
+      comment.reply.forEach((reply) {
+        detailViews.add(ReplyView(reply, eventDetails.attendantsGoing));
+      });
+      detailViews.add(NewReplyView(comment, details.loggedInUser));
+    });
+
+    return detailViews;
   }
 
   @override
-  Observable<EventDetails> stream() {
+  Widget showData(AsyncSnapshot<Details> snapshot) {
+    EventDetails details = snapshot.data.eventDetails;
+    List<EventDetailsView> viewsToDisplay = _listOfDetails(snapshot.data);
+
+    return EventDetailsLayout(details, _eventDetailsBloc, viewsToDisplay);
+  }
+
+  @override
+  Observable<Details> stream() {
     _eventDetailsBloc.fetchDetails();
 
     return _eventDetailsBloc.eventDetails;
   }
 }
 
-class _CreateNewPoll extends StatelessWidget {
-  final int _eventId;
+class DescriptionView extends EventDetailsView {
+  final String description;
 
-  const _CreateNewPoll(this._eventId, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.poll),
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return CreatePoll(_eventId);
-        }));
-      },
-    );
-  }
+  DescriptionView(this.description);
 }
+
+class TitleView extends EventDetailsView {
+  final String title;
+
+  TitleView(this.title);
+}
+
+class AttendeesGrid extends EventDetailsView {
+  final List<User> attendees;
+
+  AttendeesGrid(this.attendees);
+}
+
+class CommentView extends EventDetailsView {
+  final Comment comment;
+  final List<User> attendees;
+  final User loggedInUser;
+
+  CommentView(this.comment, this.attendees, this.loggedInUser);
+}
+
+class ReplyView extends EventDetailsView {
+  final Reply reply;
+  final List<User> attendees;
+
+  ReplyView(this.reply, this.attendees);
+}
+
+class NewReplyView extends EventDetailsView {
+  final Comment comment;
+  final User loggedInUser;
+
+  NewReplyView(this.comment, this.loggedInUser);
+}
+
+// Interface.
+class EventDetailsView {}

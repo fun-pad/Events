@@ -1,8 +1,8 @@
 import 'Reply.dart';
 
 class Comment {
-  int _id;
-  int _authorId;
+  String _id;
+  String _authorId;
   String _text;
   List<Reply> _reply;
 
@@ -12,7 +12,7 @@ class Comment {
 
   String get text => _text;
 
-  int get authorId => _authorId;
+  String get authorId => _authorId;
 
-  int get id => _id;
+  String get id => _id;
 }

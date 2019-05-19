@@ -27,6 +27,7 @@ dependencies:
   rxdart: ^0.22.0
   # Httpflutter packages getLibrary
   http: ^0.12.0+2
+  uuid: ^2.0.0
 
   # For Mocking
   faker: ^1.0.1

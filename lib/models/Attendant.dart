@@ -1,11 +1,11 @@
-class Attendant {
+class User {
   String _imagePath;
   String _name;
-  int _id;
+  String _id;
 
-  Attendant(this._imagePath, this._name, this._id);
+  User(this._imagePath, this._name, this._id);
 
-  int get id => _id;
+  String get id => _id;
 
   String get name => _name;
 

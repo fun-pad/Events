@@ -1,10 +1,11 @@
 import 'package:events/models/Attendant.dart';
 import 'package:events/resources/AppTextStyles.dart';
 import 'package:events/resources/Dimens.dart';
+import 'package:events/ui/common/Avatar.dart';
 import 'package:flutter/material.dart';
 
 class EventGoingGrid extends StatelessWidget {
-  final List<Attendant> _attendants;
+  final List<User> _attendants;
   static const int MAX_COUNT = 6;
 
   EventGoingGrid(this._attendants);
@@ -32,18 +33,12 @@ class EventGoingGrid extends StatelessWidget {
                 horizontal: AppMargins.horizontal,
               ),
               children: List.generate(gridCount, (index) {
-                Attendant attendant = _attendants[index];
+                User attendant = _attendants[index];
 
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: AppSizes.avatarRadius,
-                      child: Image.asset(
-                        attendant.imagePath,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                    Avatar(attendant.imagePath),
                     Container(
                       margin: EdgeInsets.only(left: AppMargins.horizontal),
                       child: Text(

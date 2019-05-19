@@ -5,7 +5,6 @@ import 'package:events/resources/AppColors.dart';
 import 'package:events/resources/Dimens.dart';
 import 'package:events/resources/Strings.dart';
 import 'package:events/ui/eventdetails/EventDetailsScreen.dart';
-import 'package:events/ui/poll/create/CreatePoll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
