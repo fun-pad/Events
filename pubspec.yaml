@@ -36,10 +36,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # Microsoft App Center
-  appcenter: 0.2.1
-  appcenter_crashes: 0.2.1
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -52,14 +48,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/new_york.png
-    - assets/san_francisco.png
-    - assets/people/brian_profile.png
-    - assets/people/dimitri_profile.png
-    - assets/people/joe_profile.png
-    - assets/people/joe_t_profile.png
-    - assets/people/taras_profile.png
-    - assets/people/tim_profile.png
+  - assets/new_york.png
+  - assets/san_francisco.png
+  - assets/people/brian_profile.png
+  - assets/people/dimitri_profile.png
+  - assets/people/joe_profile.png
+  - assets/people/joe_t_profile.png
+  - assets/people/taras_profile.png
+  - assets/people/tim_profile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
