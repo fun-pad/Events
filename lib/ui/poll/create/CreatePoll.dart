@@ -5,9 +5,7 @@ import 'package:events/resources/Dimens.dart';
 import 'package:flutter/material.dart';
 
 class CreatePoll extends StatefulWidget {
-  final String _eventId;
-
-  const CreatePoll(this._eventId, {Key key}) : super(key: key);
+  const CreatePoll({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CreatePoll();

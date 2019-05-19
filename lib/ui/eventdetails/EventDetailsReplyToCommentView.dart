@@ -22,6 +22,7 @@ class EventDetailsReplyToCommentView extends StatefulWidget {
 class _EventDetailsReplyToCommentView
     extends State<EventDetailsReplyToCommentView> {
   String _typedResponse = "";
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class _EventDetailsReplyToCommentView
                 decoration: InputDecoration(
                   labelText: "Add a reply",
                 ),
+                enabled: !_isLoading,
                 onChanged: (text) {
                   setState(() {
                     _typedResponse = text;
@@ -53,18 +55,38 @@ class _EventDetailsReplyToCommentView
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.send,
-              color: AppColors.textPrimary,
-            ),
-            onPressed: () {
-              if (_typedResponse.isNotEmpty)
+          _SendOrLoadingButton(_isLoading, () {
+            if (_typedResponse.isNotEmpty) {
+              setState(() {
                 widget._bloc.addReply(widget._comment, _typedResponse);
-            },
-          )
+                _isLoading = true;
+              });
+            }
+          }),
         ],
       ),
     );
+  }
+}
+
+class _SendOrLoadingButton extends StatelessWidget {
+  final VoidCallback _onPressed;
+  final bool _isLoading;
+
+  _SendOrLoadingButton(this._isLoading, this._onPressed);
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return CircularProgressIndicator();
+    } else {
+      return IconButton(
+        icon: Icon(
+          Icons.send,
+          color: AppColors.textPrimary,
+        ),
+        onPressed: _onPressed,
+      );
+    }
   }
 }

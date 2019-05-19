@@ -14,12 +14,7 @@ class EventDetailsReplyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(":::::attendantId :: " + _reply.authorId + " :::::::");
     User attendant = _attendees.firstWhere((attendant) {
-      print("attendantId :: " +
-          attendant.id +
-          " , replyAuthorId :: " +
-          _reply.authorId);
       return attendant.id == _reply.authorId;
     });
 

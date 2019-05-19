@@ -8,15 +8,24 @@ import 'EventDetailsItemRow.dart';
 class EventDetailsCommentView extends StatelessWidget {
   final Comment _comment;
   final List<User> _attendees;
+  final User _loggedInUser;
 
-  const EventDetailsCommentView(this._comment, this._attendees, {Key key})
+  const EventDetailsCommentView(
+      this._comment, this._attendees, this._loggedInUser,
+      {Key key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String authorId = _comment.authorId;
-    User attendant =
-        _attendees.firstWhere((attendant) => attendant.id == authorId);
+    User attendant = _attendees
+        .firstWhere((attendant) => attendant.id == authorId, orElse: () {
+      if (_loggedInUser.id == authorId) {
+        return _loggedInUser;
+      } else {
+        return null;
+      }
+    });
 
     return Column(
       children: <Widget>[
@@ -26,23 +35,8 @@ class EventDetailsCommentView extends StatelessWidget {
             left: AppMargins.horizontal,
             right: AppMargins.horizontal,
           ),
-          child: EventDetailsItemRow(attendant.imagePath, _comment.text),
+          child: EventDetailsItemRow(attendant?.imagePath, _comment.text),
         ),
-//        NotificationListener<OverscrollIndicatorNotification>(
-//          onNotification: (OverscrollIndicatorNotification notification) {
-//            notification.disallowGlow();
-//          },
-//          child: ListView.builder(
-//            physics: const NeverScrollableScrollPhysics(),
-//            padding: EdgeInsets.only(top: 0),
-//            shrinkWrap: true,
-//            itemCount: _comment.reply.length,
-//            itemBuilder: (context, commentPos) {
-//              return _ReplyView(_comment.reply[commentPos], _attendees);
-//            },
-//          ),
-//        ),
-//        _ReplyToComment(_comment.id, _currentUser.imagePath),
       ],
     );
   }

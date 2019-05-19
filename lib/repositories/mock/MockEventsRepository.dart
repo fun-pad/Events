@@ -24,7 +24,7 @@ class MockEventsRepository implements EventsRepository {
         _allComments().singleWhere((comment) => comment.id == reply.commentId);
     comment.reply.add(reply);
 
-    return Future.delayed(const Duration(milliseconds: 250), () {
+    return Future.delayed(const Duration(milliseconds: 750), () {
       return comment;
     });
   }

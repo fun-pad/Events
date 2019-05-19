@@ -4,20 +4,11 @@ import 'package:events/models/Attendant.dart';
 import 'package:events/models/Comment.dart';
 import 'package:events/models/EventDetails.dart';
 import 'package:events/models/Reply.dart';
-import 'package:events/resources/AppColors.dart';
-import 'package:events/resources/AppTextStyles.dart';
-import 'package:events/resources/Dimens.dart';
-import 'package:events/ui/poll/create/CreatePoll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'EventDetailsCommentView.dart';
-import 'EventDetailsDescription.dart';
-import 'EventDetailsReplyToCommentView.dart';
-import 'EventDetailsReplyView.dart';
-import 'EventDetailsTitle.dart';
-import 'EventGoingGrid.dart';
+import 'EventDetailsLayout.dart';
 
 class EventDetailsScreen extends StreamWidget<Details> {
   final EventDetailsBloc _eventDetailsBloc;
@@ -35,7 +26,8 @@ class EventDetailsScreen extends StreamWidget<Details> {
     detailViews.add(AttendeesGrid(eventDetails.attendantsGoing));
     detailViews.add(TitleView("Comments"));
     eventDetails.comments.forEach((comment) {
-      detailViews.add(CommentView(comment, eventDetails.attendantsGoing));
+      detailViews.add(CommentView(
+          comment, eventDetails.attendantsGoing, details.loggedInUser));
       comment.reply.forEach((reply) {
         detailViews.add(ReplyView(reply, eventDetails.attendantsGoing));
       });
@@ -50,62 +42,7 @@ class EventDetailsScreen extends StreamWidget<Details> {
     EventDetails details = snapshot.data.eventDetails;
     List<EventDetailsView> viewsToDisplay = _listOfDetails(snapshot.data);
 
-    return Scaffold(
-      backgroundColor: AppColors.bgSecondary,
-      floatingActionButton: _CreateNewPoll(details.id),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 160,
-            floating: false,
-            pinned: true,
-            backgroundColor: AppColors.bgPrimary,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text(
-                details.name,
-                style: AppTextStyles.title,
-              ),
-              background: Image.asset(
-                details.image.path,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                EventDetailsView viewType = viewsToDisplay[index];
-                if (viewType is TitleView) {
-                  return EventDetailsTitle(viewType.title);
-                } else if (viewType is DescriptionView) {
-                  return EventDetailsDescription(viewType.description);
-                } else if (viewType is AttendeesGrid) {
-                  return EventGoingGrid(details.attendantsGoing);
-                } else if (viewType is CommentView) {
-                  return EventDetailsCommentView(
-                      viewType.comment, viewType.attendees);
-                } else if (viewType is ReplyView) {
-                  return EventDetailsReplyView(
-                      viewType.reply, viewType.attendees);
-                } else if (viewType is NewReplyView) {
-                  return EventDetailsReplyToCommentView(viewType.comment,
-                      viewType.loggedInUser, _eventDetailsBloc);
-                } else {
-                  return Container();
-                }
-              },
-              childCount: viewsToDisplay.length,
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.only(
-              bottom: AppMargins.verticalLarge,
-            ),
-          )
-        ],
-      ),
-    );
+    return EventDetailsLayout(details, _eventDetailsBloc, viewsToDisplay);
   }
 
   @override
@@ -113,25 +50,6 @@ class EventDetailsScreen extends StreamWidget<Details> {
     _eventDetailsBloc.fetchDetails();
 
     return _eventDetailsBloc.eventDetails;
-  }
-}
-
-class _CreateNewPoll extends StatelessWidget {
-  final String _eventId;
-
-  const _CreateNewPoll(this._eventId, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.poll),
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return CreatePoll(_eventId);
-        }));
-      },
-    );
   }
 }
 
@@ -156,8 +74,9 @@ class AttendeesGrid extends EventDetailsView {
 class CommentView extends EventDetailsView {
   final Comment comment;
   final List<User> attendees;
+  final User loggedInUser;
 
-  CommentView(this.comment, this.attendees);
+  CommentView(this.comment, this.attendees, this.loggedInUser);
 }
 
 class ReplyView extends EventDetailsView {
